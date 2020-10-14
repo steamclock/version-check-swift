@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum DisplayState {
+public enum DisplayState: Equatable {
     case clear
     case suggestUpdate
     case forceUpdate

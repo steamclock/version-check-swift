@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum Status {
+public enum Status: Equatable {
     case unknown
     case fetchFailure
     case versionAllowed
