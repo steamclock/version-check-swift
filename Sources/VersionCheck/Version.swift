@@ -6,11 +6,15 @@ import Foundation
 
 let marketingRegex = try! NSRegularExpression(pattern:#"([0-9\.]+)(.*)"#)
 
-public struct Version: Equatable, Comparable {
-    let marketingComponents: [Int]
-    let build: Int?
-    let additionalText: String?
-    let isDevelopment: Bool
+public struct Version: Equatable, Comparable, RawRepresentable, Codable {
+    public typealias RawValue = String
+
+    public let marketingComponents: [Int]
+    public let build: Int?
+    public let additionalText: String?
+    public let isDevelopment: Bool
+
+    public var rawValue: String { description }
 
     public var description: String {
         let version = marketingComponents.map { "\($0)" }.joined(separator: ".")
@@ -18,8 +22,8 @@ public struct Version: Equatable, Comparable {
         return version + (additionalText ?? "") + buildText
     }
 
-    // Actual main parsing / initialization based on an optional marketing and build version. Kept private because any external caller should
-    // always specify at least some text
+    // Actual main parsing / initialization based on an optional marketing and build version. Kept private because any
+    // external caller should always specify at least some text
     private init(optMarketing marketing: String?, optBuild build: String?) throws {
         // zero is a special build number that indicates it's a development build, flag
         // that separately rather than leaving it as a 0 in the build number
@@ -35,6 +39,7 @@ public struct Version: Equatable, Comparable {
             // separate additional text from numeric marketing versions
             let splitMarketing = marketingRegex.captureGroups(in: marketing)
             additionalText = splitMarketing.first?[checked: 2]
+
             let numericMarketing = splitMarketing.first?[checked: 1] ?? ""
 
             // numeric portion of marketing version can't start or end with a dot, which regex doesn't capture
@@ -42,7 +47,7 @@ public struct Version: Equatable, Comparable {
                 throw VersionCheckError.invalidVersionString
             }
 
-            // turn marketing components into actual numbers
+            // turn marketing components into actual ints
             let components = (splitMarketing.first?[checked: 1] ?? "").split(separator: ".")
             marketingComponents = try components.map {
                 if let value = Int($0) {
@@ -59,6 +64,10 @@ public struct Version: Equatable, Comparable {
         if marketingComponents.isEmpty && build == nil {
             throw VersionCheckError.invalidVersionString
         }
+    }
+
+    public init?(rawValue: String) {
+        try? self.init(string: rawValue)
     }
 
     public init(string: String) throws {
@@ -113,7 +122,7 @@ public struct Version: Equatable, Comparable {
         // paired components, padded with zeros
         let components = Zip2WithNilPadding(lhs.marketingComponents, rhs.marketingComponents).map { ($0.0 ?? 0, $0.1 ?? 0) }
 
-        // check if pairwise version components compare differntly
+        // check if pairwise version components compare differently
         for element in components {
             if element.0 < element.1 {
                 return true
@@ -140,5 +149,20 @@ public struct Version: Equatable, Comparable {
         // marketing version are same and whether or not they are development builds doesn't matter
         // just compare build numbers
         return ((lhs.build ?? 0) < (rhs.build ?? 0))
+    }
+
+    // Pattern match against a version, use the first argument as a pattern, value will match if any components are equal,
+    // OR are nil in the pattern,
+    public static func ~= (_ pattern: Version, _ value: Version) -> Bool {
+        // assume that all missing components in value are zeros
+        let components = Zip2WithNilPadding(pattern.marketingComponents, value.marketingComponents).map { ($0.0, $0.1 ?? 0) }
+
+        // check that all marketing components are equal, or misisng in the patterns
+        let marketingMatches = components.reduce(true) {
+            return $0 && (($1.0 == $1.1) || ($1.0 == nil))
+        }
+
+        // overall equality is marketing equality and build equality
+        return marketingMatches && ((pattern.build == value.build) || (pattern.build == nil))
     }
 }

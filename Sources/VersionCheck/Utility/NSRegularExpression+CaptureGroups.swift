@@ -1,9 +1,6 @@
 //
 //  NSRegularExpression+CaptureGroups.swift
 //  
-//
-//  Created by Nigel Brooke on 2020-10-13.
-//
 
 import Foundation
 
