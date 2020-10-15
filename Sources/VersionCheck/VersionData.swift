@@ -7,12 +7,12 @@ import Foundation
 public struct PlatformVersionData: Codable {
     public let minimumVersion: Version?
     public let blockedVersions: [Version]?
-    public let currentVersion: Version?
+    public let latestTestVersion: Version?
 
-    public init(minimumVersion: Version?, blockedVersions: [Version]?, currentVersion: Version?) {
+    public init(minimumVersion: Version?, blockedVersions: [Version]?, latestTestVersion: Version?) {
         self.minimumVersion = minimumVersion
         self.blockedVersions = blockedVersions
-        self.currentVersion = currentVersion
+        self.latestTestVersion = latestTestVersion
     }
 }
 

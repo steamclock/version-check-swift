@@ -136,8 +136,8 @@ public class VersionCheck {
             }
         }
 
-        if let currentVersion = versionData.ios?.currentVersion {
-            if appVersion < currentVersion {
+        if let latestTestVersion = versionData.ios?.latestTestVersion {
+            if appVersion < latestTestVersion {
                 status = .versionAllowed
                 displayState = .suggestUpdate
                 return

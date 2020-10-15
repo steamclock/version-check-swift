@@ -21,7 +21,7 @@ let testJSON =
       "ios" : {
         "minimumVersion": "2.1",
         "blockedVersions": ["2.2.0", "2.2.1", "@301"],
-        "currentVersion": "2.4.2@400"
+        "latestTestVersion": "2.4.2@400"
       },
       "serverForceVersionFailure": false,
       "serverMaintenance": false

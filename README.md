@@ -25,12 +25,12 @@ Expected JSON format:
   "ios" : {
     "minimumVersion": "1.1",
     "blockedVersions": ["1.2.0", "1.2.1", "@301"],
-    "currentVersion": "1.4.2@400"
+    "latestTestVersion": "1.4.2@400"
   },
   "android" : {
     "minimumVersion": "1.1",
     "blockedVersions": ["1.2.0", "1.2.1", "@301"],
-    "currentVersion": "1.4.2@400"
+    "latestTestVersion": "1.4.2@400"
   },
   "serverForceVersionFailure": false,
   "serverMaintenance": false
