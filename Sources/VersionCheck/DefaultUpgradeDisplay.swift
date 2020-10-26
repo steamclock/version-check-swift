@@ -7,16 +7,16 @@
 import Foundation
 import UIKit
 
-class DefaultUpgradeDisplay {
+public class DefaultUpgradeDisplay {
     private var lastState: DisplayState = .clear
     private var alert: UIAlertController?
     private var isTestBuild: Bool
 
-    init(isTestBuild: Bool = false) {
+    public init(isTestBuild: Bool = false) {
         self.isTestBuild = isTestBuild
     }
 
-    func displayStateChanged(_ state: DisplayState) {
+    public func displayStateChanged(_ state: DisplayState) {
         if state == lastState {
             return
         }
@@ -44,7 +44,7 @@ class DefaultUpgradeDisplay {
         }
     }
 
-    func showAlert(title: String, message: String, allowContinue: Bool) {
+    private func showAlert(title: String, message: String, allowContinue: Bool) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         self.alert = alert
@@ -59,6 +59,4 @@ class DefaultUpgradeDisplay {
         UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 }
-
 #endif
-
