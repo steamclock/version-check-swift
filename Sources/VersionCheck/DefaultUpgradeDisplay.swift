@@ -35,7 +35,7 @@ public class DefaultUpgradeDisplay {
             showAlert(title: "Must Update", message: "The version of the application is out of date and cannot run. Please update to the latest version from the App Store", allowContinue: false)
         case .suggestUpdate:
             if isTestBuild {
-                showAlert(title: "Should Update", message: "This test version of the application is out of date and may. Please update to the latest version via the TestFlight, Ad Hoc build distribution or the App Store.", allowContinue: true)
+                showAlert(title: "Should Update", message: "This test version of the application is out of date and may not work as expected. Please update to the latest version via the TestFlight, Ad Hoc build distribution or the App Store.", allowContinue: true)
             }
         case .downForMaintenance:
             showAlert(title: "Down for Maintenance", message: "The server is currently down for maintenance. Please check back later.", allowContinue: false)
