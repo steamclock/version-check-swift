@@ -32,7 +32,7 @@ public class DefaultUpgradeDisplay {
         case .clear:
             break
         case .forceUpdate:
-            showAlert(title: "Must Update", message: "The version of the application is out of date and cannot run. Please update to the latest version from the App Store", allowContinue: false)
+            showAlert(title: "Must Update", message: "The version of the application is out of date and cannot run. Please update to the latest version from the App Store.", allowContinue: false)
         case .suggestUpdate:
             if isTestBuild {
                 showAlert(title: "Should Update", message: "This test version of the application is out of date and may not work as expected. Please update to the latest version via the TestFlight, Ad Hoc build distribution or the App Store.", allowContinue: true)
