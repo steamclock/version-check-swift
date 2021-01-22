@@ -14,6 +14,6 @@ public struct IOSVersionFetcher: AppVersionFetcher {
         //...
     }
 
-    public var marketing: String? { Bundle.main.infoDictionary?["CFBundleVersion"] as? String }
-    public var build: String? { Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String }
+    public var marketing: String? { Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String }
+    public var build: String? { Bundle.main.infoDictionary?["CFBundleVersion"] as? String }
 }
